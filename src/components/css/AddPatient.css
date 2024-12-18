@@ -1,0 +1,25 @@
+/* AddPatient.css */
+h3 {
+  color: blue;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}
