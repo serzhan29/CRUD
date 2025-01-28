@@ -1,0 +1,139 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <style>
+        /* Общие стили для страницы */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Стили для навигации */
+        nav {
+            background-color: #007BFF;
+            padding: 15px;
+        }
+
+        .topnav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .topnav a:hover {
+            background-color: #0056b3;
+        }
+
+        .topnav .active {
+            background-color: #0056b3;
+        }
+
+        /* Стили для контейнера с формой */
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        /* Стили для кнопки */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стили для ссылок */
+        .link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .link a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Стили для формы */
+        .my-class {
+            display: flex;
+            flex-direction: column;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="topnav">
+            <a class="active" href="{% url 'home' %}">Главная страница</a>
+
+            {% if user.is_authenticated %}
+                <!-- Для авторизованных пользователей -->
+                <a href="{% url 'logoutpage' %}">Выйти</a>
+                <a href="{% url 'individualreport' %}">Создания отчета</a>
+                <a href="{% url 'report' %}">Мои отчеты</a>
+            {% else %}
+                <!-- Для неавторизованных пользователей -->
+                <a href="{% url 'loginpage' %}">Войти</a>
+                <a href="{% url 'registerpage' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Контейнер с формой регистрации -->
+    <div class="container">
+        <h3>Регистрация</h3>
+        <form method="post" class="my-class">
+            {% csrf_token %}
+            <button type="submit">Регистрация</button>
+        </form>
+
+        <!-- Ссылка на страницу логина -->
+        <div class="link">
+            <p>Уже зарегистрированы?</p>
+            <a href="{% url 'loginpage' %}">Войдите в систему</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -8,10 +8,10 @@
 </head>
 <nav>
   <div class="topnav">
-    <a class="active" href="{% url 'home'%}">Home</a>
-    <a href="{% url 'loginpage'%}">Login</a>
-    <a href="{% url 'registerpage'%}">Register</a>
-    <a href="{% url 'logoutpage'%}">Logout</a>
+    <a class="active" href="{% url 'home'%}">Главная страница</a>
+    <a href="{% url 'loginpage'%}">Логин</a>
+    <a href="{% url 'registerpage'%}">Регистрация</a>
+    <a href="{% url 'logoutpage'%}">Выход</a>
     <a href="{% url 'individualreport'%}">My Report</a>
 
 </div>
@@ -21,12 +21,12 @@
   <form method="POST">
     {% csrf_token %}
     Username: <input type="text" name="username" />
-    Password: <input type="password" name="password" />
+    Пароль: <input type="password" name="password" />
     <button type="submit">Login</button>
   </form>
 {% for message in messages %}
 <p>{{message}} </p>
 {% endfor %}
-  <p>Not a member? </p><a href="{% url 'registerpage'%}">REGISTER</a>
+  <p>Not a member? </p><a href="{% url 'registerpage'%}">Регистрация</a>
 </body>
 </html>

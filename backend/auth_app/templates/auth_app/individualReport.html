@@ -1,0 +1,167 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Health Report</title>
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Навигация */
+        nav {
+            background-color: #007BFF;
+            padding: 15px;
+        }
+
+        .topnav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .topnav a:hover {
+            background-color: #0056b3;
+        }
+
+        .topnav .active {
+            background-color: #0056b3;
+        }
+
+        /* Контейнер для контента */
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            color: #007BFF;
+            margin-bottom: 30px;
+        }
+
+        /* Стили для формы */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стили для ссылок */
+        .link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="topnav">
+            <a class="active" href="{% url 'home' %}">Главная страница</a>
+
+            {% if user.is_authenticated %}
+                <!-- Для авторизованных пользователей -->
+                <a href="{% url 'logoutpage' %}">Выйти</a>
+                <a href="{% url 'individualreport' %}">Создания отчета</a>
+                <a href="{% url 'report' %}">Мои отчеты</a>
+            {% else %}
+                <!-- Для неавторизованных пользователей -->
+                <a href="{% url 'loginpage' %}">Войти</a>
+                <a href="{% url 'registerpage' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Контейнер с формой для ввода медицинской информации -->
+    <div class="container">
+        <h3>Отправка отчета</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            <!-- Поле для ввода номера медицинской карты -->
+            <div class="form-group">
+                <label for="healthcarenumber">Номер медицинского учреждения</label>
+                <input type="number" id="healthcarenumber" name="healthcarenumber" required>
+            </div>
+
+            <!-- Поле для ввода врача -->
+            <div class="form-group">
+                <label for="physician">Врач</label>
+                <input type="text" id="physician" name="physician" required>
+            </div>
+
+            <!-- Поле для выбора пациента -->
+            <div class="form-group">
+                <label for="patient">Выберите пациента</label>
+                <select id="patient" name="patient" required>
+                    {% for patient in patients %}
+                        <option value="{{ patient.patient_id }}">{{ patient.first_name }} {{ patient.last_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Кнопка для отправки формы -->
+            <button type="submit">Отправить медицинскую карту</button>
+        </form>
+
+        <!-- Ссылка на отчет пациента -->
+        <div class="link">
+            <a href="{% url 'report' %}">Перейти к Моему отчету</a>
+        </div>
+    </div>
+</body>
+</html>

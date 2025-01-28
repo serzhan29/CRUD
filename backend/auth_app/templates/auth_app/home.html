@@ -74,14 +74,61 @@
         .logout-btn:hover {
             background-color: #c82333;
         }
+
+
+        /* Навигация */
+        nav {
+            background-color: #007BFF;
+            padding: 15px;
+        }
+
+        .topnav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .topnav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .topnav a:hover {
+            background-color: #0056b3;
+        }
+
+        .topnav .active {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
-        <h1>Система управления пациентами</h1>
+        <h1 style="color:white;">Система управления пациентами</h1>
     </header>
+        <!-- Навигация -->
+    <nav>
+        <div class="topnav">
+            <a class="active" href="{% url 'home' %}">Главная страница</a>
 
+            {% if user.is_authenticated %}
+                <!-- Для авторизованных пользователей -->
+                <a href="{% url 'logoutpage' %}">Выйти</a>
+                <a href="{% url 'individualreport' %}">Создания отчета</a>
+                <a href="{% url 'report' %}">Мои отчеты</a>
+            {% else %}
+                <!-- Для неавторизованных пользователей -->
+                <a href="{% url 'loginpage' %}">Войти</a>
+                <a href="{% url 'registerpage' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </nav>
     <!-- Основное содержимое -->
     <div class="container">
         <!-- Информация об авторизованном пользователе -->
@@ -89,10 +136,6 @@
             {% if current_user.is_authenticated %}
                 <p>Добро пожаловать, <strong>{{ current_user.username }}</strong>!</p>
                 <!-- Кнопка выхода -->
-                <form method="POST">
-                    {% csrf_token %}
-                    <button type="submit" name="logout" class="logout-btn">Выйти</button>
-                </form>
             {% else %}
                 <p>Вы не авторизованы. Пожалуйста, войдите в систему.</p>
             {% endif %}

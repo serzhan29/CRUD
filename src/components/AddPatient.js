@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default function AddPatient({ handleAddSubmit, handleCancelBtn }) {
+  // Компонент AddPatient предназначен для добавления нового пациента.
+  // Он принимает два пропса:
+  // 1. handleAddSubmit - функция, вызываемая при отправке формы.
+  // 2. handleCancelBtn - функция, вызываемая при нажатии кнопки "Отмена".
   // Общие стили
   const styles = {
     container: {
